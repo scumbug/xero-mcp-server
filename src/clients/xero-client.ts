@@ -86,7 +86,10 @@ abstract class MCPXeroClient extends XeroClient {
   override async updateTenants(fullOrgDetails?: boolean): Promise<any[]> {
     await super.updateTenants(fullOrgDetails);
     if (this.tenants && this.tenants.length > 0) {
-      this.tenantId = this.tenants[0].tenantId;
+      if(process.env.XERO_TENANT_ID)
+        this.tenantId = process.env.XERO_TENANT_ID;
+      else
+        this.tenantId = this.tenants[0].tenantId;
     }
     return this.tenants;
   }
